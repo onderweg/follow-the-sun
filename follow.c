@@ -23,6 +23,14 @@ static id get_nsstring(const char *c_str)
                         sel_registerName("stringWithUTF8String:"), c_str);
 }
 
+static char* get_cstring(CFStringRef str) {
+    CFIndex length = CFStringGetLength(str);
+    CFIndex maxSize = CFStringGetMaximumSizeForEncoding(length, kCFStringEncodingUTF8);
+    char *result = (char *)malloc(maxSize);
+    CFStringGetCString(str, result, maxSize,kCFStringEncodingUTF8);
+    return result;
+}
+
 static CFStringRef script = CFSTR(
     "tell application \"System Events\"\n"
     "  tell appearance preferences\n"
@@ -89,8 +97,13 @@ t_sundial getSunInfo()
     return data;
 }
 
+/**
+ * Toggle dark mode, by executing AppleScript
+ */
 static void setDarkMode(int darkMode)
-{
+{    
+    //id err = objc_msgSend((id)objc_getClass("NSDictionary"), sel_registerName("new"));
+    CFDictionaryRef err = CFDictionaryCreate(NULL, NULL, NULL, 0, NULL, NULL);
     id scriptString = objc_msgSend((id)objc_getClass("NSString"),
                                    sel_registerName("stringWithFormat:"), script, darkMode);
     id NSAppleScript = (id)objc_getClass("NSAppleScript");
@@ -101,9 +114,17 @@ static void setDarkMode(int darkMode)
     id scriptRef = objc_msgSend(allocScript, init, scriptString);
     // Execute script
     console_log("%s", darkMode ? "☾ Darkness is comming" : "☀ Let there be light");
-    objc_msgSend(scriptRef, sel_registerName("executeAndReturnError:"), NULL);
+    id res = objc_msgSend(scriptRef, sel_registerName("executeAndReturnError:"), &err);
+    if (res == NULL) {
+        CFStringRef errorMessage = (CFStringRef)CFDictionaryGetValue(err, CFSTR("NSAppleScriptErrorMessage"));
+        fprintf(stderr, "AppleScript error:\n%s\n", 
+            get_cstring(errorMessage));      
+        exit(1);        
+    }
+    
     // Cleanup
     objc_msgSend(scriptRef, release);
+    objc_msgSend(res, release);
 }
 
 /**
