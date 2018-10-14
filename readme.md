@@ -35,13 +35,17 @@ $ /usr/bin/corebrightnessdiag sunschedule
 
 ## Building
 
-**Builds on macOS only.**
+**Builds on macOS only**
+
+```
+$ make
+```
+
+Alternatively, direct via gcc:
 
 ```
 gcc -F/System/Library/PrivateFrameworks -framework Foundation -framework CoreBrightness follow.c -o follow -lobjc
 ```
-
-*@TODO: create Makefile*
 
 ## Related
 
