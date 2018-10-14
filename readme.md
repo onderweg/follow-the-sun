@@ -1,6 +1,6 @@
 # Follow the sun
 
-Switch to Dark mode automatically after sunset, an back to Light mode when sun rises.
+Switch to Dark mode automatically after sunset, and back to Light mode after sunrise.
 
 This tool was created mainly to experiment with:
 
@@ -41,10 +41,10 @@ $ /usr/bin/corebrightnessdiag sunschedule
 $ make
 ```
 
-Alternatively, direct via gcc:
+Alternatively, directly with gcc:
 
 ```
-gcc -F/System/Library/PrivateFrameworks -framework Foundation -framework CoreBrightness follow.c -o follow -lobjc
+$ gcc -F/System/Library/PrivateFrameworks -framework Foundation -framework CoreBrightness follow.c -o follow -lobjc
 ```
 
 ## Related
