@@ -23,11 +23,12 @@ static id get_nsstring(const char *c_str)
                         sel_registerName("stringWithUTF8String:"), c_str);
 }
 
-static char* get_cstring(CFStringRef str) {
+static char *get_cstring(CFStringRef str)
+{
     CFIndex length = CFStringGetLength(str);
     CFIndex maxSize = CFStringGetMaximumSizeForEncoding(length, kCFStringEncodingUTF8);
     char *result = (char *)malloc(maxSize);
-    CFStringGetCString(str, result, maxSize,kCFStringEncodingUTF8);
+    CFStringGetCString(str, result, maxSize, kCFStringEncodingUTF8);
     return result;
 }
 
@@ -101,7 +102,7 @@ t_sundial getSunInfo()
  * Toggle dark mode, by executing AppleScript
  */
 static void setDarkMode(int darkMode)
-{    
+{
     //id err = objc_msgSend((id)objc_getClass("NSDictionary"), sel_registerName("new"));
     CFDictionaryRef err = CFDictionaryCreate(NULL, NULL, NULL, 0, NULL, NULL);
     id scriptString = objc_msgSend((id)objc_getClass("NSString"),
@@ -115,13 +116,14 @@ static void setDarkMode(int darkMode)
     // Execute script
     console_log("%s", darkMode ? "☾ Darkness is comming" : "☀ Let there be light");
     id res = objc_msgSend(scriptRef, sel_registerName("executeAndReturnError:"), &err);
-    if (res == NULL) {
+    if (res == NULL)
+    {
         CFStringRef errorMessage = (CFStringRef)CFDictionaryGetValue(err, CFSTR("NSAppleScriptErrorMessage"));
-        fprintf(stderr, "AppleScript error:\n%s\n", 
-            get_cstring(errorMessage));      
-        exit(1);        
+        fprintf(stderr, "AppleScript error:\n%s\n",
+                get_cstring(errorMessage));
+        exit(1);
     }
-    
+
     // Cleanup
     objc_msgSend(scriptRef, release);
     objc_msgSend(res, release);
@@ -150,13 +152,29 @@ int isDarkModeActive()
 }
 
 static void timerCallBack(CFRunLoopTimerRef timerRef, void *info)
-{    
+{
     // Retrieve current sun status
     t_sundial sunInfo = getSunInfo();
     console_log("Daylight status checked. Status: %s", sunInfo.isDay ? "☀" : "☾");
     if (isDarkModeActive() != !sunInfo.isDay)
     {
         setDarkMode(!sunInfo.isDay);
+    }
+}
+
+void signalHandler(int sig)
+{
+    switch (sig)
+    {
+    case SIGINT:
+    case SIGQUIT:
+    case SIGTERM:
+        CFRunLoopStop(CFRunLoopGetCurrent());
+        printf("Stopped following the sun\n");
+        break;
+    default:
+        fprintf(stderr, "Unhandled signal (%d) %s\n", sig, strsignal(sig));
+        break;
     }
 }
 
@@ -167,6 +185,11 @@ int main()
 
     t_sundial info = getSunInfo();
     createTimer(info);
+
+    signal(SIGINT, signalHandler);
+    signal(SIGTERM, signalHandler);
+    signal(SIGQUIT, signalHandler);
+
     CFRunLoopRun();
 
     // Cleanup
