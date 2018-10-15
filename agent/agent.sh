@@ -1,17 +1,18 @@
 CMD=$1
 BASEDIR=$(dirname "$0")
+PLIST=$BASEDIR/eu.onderweg.follow.plist
 
 case "$CMD" in
 	"install")
-		cp -v $BASEDIR/eu.onderweg.follow.plist ~/Library/LaunchAgents
+		cp -v $PLIST ~/Library/LaunchAgents
 		;;
 	"start")
-        launchctl load eu.onderweg.follow.plist
+        launchctl load $PLIST
         launchctl start eu.onderweg.follow
         launchctl list | grep 'eu.onderweg.follow'
 		;;
 	"stop")
-	    launchctl unload eu.onderweg.follow.plist
+	    launchctl unload $PLIST
 		;;
 	"logs")
 	    tail /tmp/follow_the_sun.log
