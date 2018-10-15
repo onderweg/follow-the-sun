@@ -15,13 +15,5 @@ follow: $(SRCS)
 install:
 	install -v $(TARGET) /usr/local/bin/$(TARGET)	
 	cp eu.onderweg.follow.plist ~/Library/LaunchAgents	
-
-start:
-	launchctl load eu.onderweg.follow.plist
-	launchctl start eu.onderweg.follow
-	launchctl list | grep 'follow'
-
-stop:
-	launchctl unload eu.onderweg.follow.plist
 	
 .PHONY: all install

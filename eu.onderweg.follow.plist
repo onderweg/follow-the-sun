@@ -11,7 +11,7 @@
 		<key>StandardErrorPath</key>
 		<string>/tmp/follow_the_sun_err.log</string>
 		<key>RunAtLoad</key>
-		<false/>
+		<true/>
     	<key>KeepAlive</key>
     	<false/>				
 	</dict>
