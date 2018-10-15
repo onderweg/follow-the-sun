@@ -3,7 +3,7 @@ BASEDIR=$(dirname "$0")
 
 case "$CMD" in
 	"install")
-		cp -v $BASEDIR/../eu.onderweg.follow.plist ~/Library/LaunchAgents
+		cp -v $BASEDIR/eu.onderweg.follow.plist ~/Library/LaunchAgents
 		;;
 	"start")
         launchctl load eu.onderweg.follow.plist
