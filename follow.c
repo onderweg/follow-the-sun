@@ -156,7 +156,7 @@ static void timerCallBack(CFRunLoopTimerRef timerRef, void *info)
 {
     // Retrieve current sun status
     t_sundial sunInfo = getSunInfo();
-    console_log("Daylight status checked. Status: %s", sunInfo.isDay ? "☀" : "☾");
+    console_log("Daylight status → %s", sunInfo.isDay ? "☀" : "☾");
     if (isDarkModeActive() != !sunInfo.isDay)
     {
         setDarkMode(!sunInfo.isDay);
@@ -171,7 +171,7 @@ void signalHandler(int sig)
     case SIGQUIT:
     case SIGTERM:
         CFRunLoopStop(CFRunLoopGetCurrent());
-        printf("Stopped following the sun\n");
+        console_log("Stopped following the sun");
         break;
     default:
         fprintf(stderr, "Unhandled signal (%d) %s\n", sig, strsignal(sig));

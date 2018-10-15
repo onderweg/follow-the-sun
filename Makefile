@@ -13,7 +13,6 @@ follow: $(SRCS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 install:
-	install -v $(TARGET) /usr/local/bin/$(TARGET)	
-	cp eu.onderweg.follow.plist ~/Library/LaunchAgents	
+	install -v $(TARGET) /usr/local/bin/$(TARGET)			
 	
 .PHONY: all install
