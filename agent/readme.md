@@ -2,11 +2,11 @@ Run in background (via launchctl):
 
 ```
 # Install agent (once)
-$ agent.sh install
+$ ./agent.sh install
 
 # Start agent
-$ agent.sh start
+$ ./agent.sh start
 
 # Stop
-$ agent.sh stop
+$ ./agent.sh stop
 ```

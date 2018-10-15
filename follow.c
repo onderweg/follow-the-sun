@@ -115,7 +115,7 @@ static void setDarkMode(int darkMode)
     id allocScript = objc_msgSend(NSAppleScript, alloc);
     id scriptRef = objc_msgSend(allocScript, init, scriptString);
     // Execute script
-    console_log("%s", darkMode ? "☾ Darkness is comming" : "☀ Let there be light");
+    console_log("%s", darkMode ? "☾ Darkness is coming" : "☀ Let there be light");
     id res = objc_msgSend(scriptRef, sel_registerName("executeAndReturnError:"), &err);
     if (res == NULL)
     {
