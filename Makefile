@@ -14,5 +14,6 @@ follow: $(SRCS)
 
 install:
 	install -v $(TARGET) /usr/local/bin/$(TARGET)	
-
+	cp eu.onderweg.follow.plist ~/Library/LaunchAgents	
+	
 .PHONY: all install

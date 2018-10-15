@@ -60,6 +60,7 @@ void console_log(const char *fmt, ...)
 
     os_log(log_handle, "%{public}s", str);
     printf("%s\n", str);
+    fflush(stdout);
     free(str);
 }
 
