@@ -78,6 +78,13 @@ t_sundial getSunInfo()
     // Get brightness schedule (result is NSDictionary)
     SEL copySel = sel_registerName("copyPropertyForKey:");
     id scheduleDict = objc_msgSend(bsClient, copySel, CFSTR("BlueLightSunSchedule"));
+    if (scheduleDict != NULL)
+    {
+        fprintf(stderr, "\nError: Sunset/Sunrise schedule not available.\n");
+        fprintf(stderr, "📍 This might be because the system can't determine your location,\n");
+        fprintf(stderr, "this can be the case for example when you're not connected to a wifi network.\n");        
+        exit(1);
+    }
 
     // Get sunrise/sunset properties (of dates type __NSTaggedDate)
     SEL objectForKeySel = sel_registerName("objectForKey:");
