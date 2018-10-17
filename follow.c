@@ -46,22 +46,39 @@ typedef struct
     bool isDay;
 } t_sundial;
 
+void _log(FILE * stream, const char *fmt, va_list ap) {
+    char *str = NULL;
+    vasprintf(&str, fmt, ap);
+    if (stream == stdout) {        
+        os_log(log_handle, "%{public}s", str);
+    } else {
+        os_log_error(log_handle, "%{public}s", str);
+    }
+    fprintf(stream, "%s\n", str);
+    fflush(stream);
+    free(str);
+}    
+
 /**
  * Writes message to both standard output and macOS log system
  */
 void console_log(const char *fmt, ...)
 {
-    char *str = NULL;
     va_list ap;
-
     va_start(ap, fmt);
-    vasprintf(&str, fmt, ap);
-    va_end(ap);
+    _log(stdout, fmt, ap);
+    va_end(ap);       
+}
 
-    os_log(log_handle, "%{public}s", str);
-    printf("%s\n", str);
-    fflush(stdout);
-    free(str);
+/**
+ * Writes message to both standard err and macOS log system
+ */
+void console_error(const char *fmt, ...)
+{
+    va_list ap;
+    va_start(ap, fmt);
+    _log(stderr, fmt, ap);
+    va_end(ap);  
 }
 
 /**
@@ -78,6 +95,13 @@ t_sundial getSunInfo()
     // Get brightness schedule (result is NSDictionary)
     SEL copySel = sel_registerName("copyPropertyForKey:");
     id scheduleDict = objc_msgSend(bsClient, copySel, CFSTR("BlueLightSunSchedule"));
+    if (scheduleDict == NULL)
+    {
+        console_error("\nError: Sunset/Sunrise schedule not available.");
+        fprintf(stderr, "📍 This might be because the system can't determine your location,\n");
+        fprintf(stderr, "this can be the case for example when you're not connected to a wifi network.\n");        
+        exit(1);
+    }
 
     // Get sunrise/sunset properties (of dates type __NSTaggedDate)
     SEL objectForKeySel = sel_registerName("objectForKey:");
@@ -103,7 +127,7 @@ t_sundial getSunInfo()
  * Toggle dark mode, by executing AppleScript
  */
 static void setDarkMode(int darkMode)
-{   
+{    
     console_log("%s", darkMode ? "☾ Darkness is coming" : "☀ Let there be light");
 
     CFDictionaryRef err = CFDictionaryCreate(NULL, NULL, NULL, 0, NULL, NULL);
