@@ -38,7 +38,7 @@ $ /usr/bin/corebrightnessdiag sunschedule
 **Builds on macOS only**
 
 ```
-$ make
+$ make && make install
 ```
 
 Alternatively, directly with gcc:
