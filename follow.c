@@ -110,8 +110,9 @@ t_sundial getSunInfo()
  * Toggle dark mode, by executing AppleScript
  */
 static void setDarkMode(int darkMode)
-{
-    //id err = objc_msgSend((id)objc_getClass("NSDictionary"), sel_registerName("new"));
+{    
+    console_log("%s", darkMode ? "☾ Darkness is coming" : "☀ Let there be light");
+    
     CFDictionaryRef err = CFDictionaryCreate(NULL, NULL, NULL, 0, NULL, NULL);
     id scriptString = objc_msgSend((id)objc_getClass("NSString"),
                                    sel_registerName("stringWithFormat:"), script, darkMode);
@@ -121,8 +122,7 @@ static void setDarkMode(int darkMode)
     SEL release = sel_registerName("release");
     id allocScript = objc_msgSend(NSAppleScript, alloc);
     id scriptRef = objc_msgSend(allocScript, init, scriptString);
-    // Execute script
-    console_log("%s", darkMode ? "☾ Darkness is coming" : "☀ Let there be light");
+    // Execute script    
     id res = objc_msgSend(scriptRef, sel_registerName("executeAndReturnError:"), &err);
     if (res == NULL)
     {
