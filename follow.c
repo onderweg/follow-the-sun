@@ -47,7 +47,7 @@ typedef struct
 } t_sundial;
 
 void _log(FILE * stream, const char *fmt, va_list ap) {
-    char *str = NULL;
+    char *str = NULL;    
     vasprintf(&str, fmt, ap);
     if (stream == stdout) {        
         os_log(log_handle, "%{public}s", str);
@@ -203,7 +203,7 @@ void signalHandler(int sig)
 
 int main()
 {
-    log_handle = os_log_create("eu.onderweg", "default");
+    log_handle = os_log_create("eu.onderweg", getppid() == 1 ? "daemon" : "default");
     console_log("Following the sun... checking every %i seconds", POLL_INTERVAL);
 
     t_sundial info = getSunInfo();
