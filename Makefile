@@ -15,4 +15,7 @@ follow: $(SRCS)
 install:
 	install -v $(TARGET) /usr/local/bin/$(TARGET)			
 	
-.PHONY: all install
+clean:
+	rm -f $(TARGET)
+
+.PHONY: all install clean

@@ -196,7 +196,7 @@ void signalHandler(int sig)
         console_log("Stopped following the sun");
         break;
     default:
-        fprintf(stderr, "Unhandled signal (%d) %s\n", sig, strsignal(sig));
+        console_error("Unhandled signal (%d) %s\n", sig, strsignal(sig));
         break;
     }
 }
