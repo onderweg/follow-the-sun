@@ -33,6 +33,10 @@ You can retrieve the above schedule information from the command line:
 $ /usr/bin/corebrightnessdiag sunschedule
 ```
 
+Note that CoreBrightness needs to know your location in order to calculate the correct sunset and sunrise times. If Wifi is disabled, CoreBrightness (via `CLLocationManager`)
+might not be able to determine your location. In that case, the calculated sun schedule is not correct.
+So make sure WiFi is turned on. 
+
 ## Building
 
 **Builds on macOS only**
