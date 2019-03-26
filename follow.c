@@ -7,6 +7,11 @@
 #include <CoreFoundation/CFString.h>
 #include <CoreFoundation/CoreFoundation.h>
 
+#define ANSI_BOLD "\033[1m"
+#define ANSI_BLUE "\033[38;5;039m"
+#define ANSI_YELLOW "\033[38;5;228m"
+#define ANSI_RESET "\033[0m" // To flush out prev settings
+
 #define kTimeInterval (0.1)
 #define kTimeOnce (0.0)
 
@@ -46,13 +51,27 @@ typedef struct
     bool isDay;
 } t_sundial;
 
+static void removeAnsiEsc(char *src, char *dest)
+{
+	bool cut = false;
+	for(; *src; src++)
+	{
+		if (*src == (char)0x1b) cut = true;
+		if (!cut) *dest++ = *src;
+		if (*src == 'm' || *src == 'K') cut = false;
+	}
+	*dest = '\0';
+}
+
 static void _log(FILE * stream, const char *fmt, va_list ap) {
     char *str = NULL;    
+    char plainStr[1024];    
     vasprintf(&str, fmt, ap);
+    removeAnsiEsc(str, plainStr);
     if (stream == stdout) {        
-        os_log(log_handle, "%{public}s", str);
+        os_log(log_handle, "%{public}s", plainStr);
     } else {
-        os_log_error(log_handle, "%{public}s", str);
+        os_log_error(log_handle, "%{public}s", plainStr);
     }
     fprintf(stream, "%s\n", str);
     fflush(stream);
@@ -178,7 +197,7 @@ int isDarkModeActive()
 static void timerCallBack(CFRunLoopTimerRef timerRef, void *info)
 {    
     t_sundial sunInfo = getSunInfo();
-    console_log("Daylight status → %s", sunInfo.isDay ? "☀" : "☾");
+    console_log("Daylight status → %s%s%s", ANSI_YELLOW, sunInfo.isDay ? "☀" : "☾", ANSI_RESET);
     if (isDarkModeActive() != !sunInfo.isDay)
     {
         setDarkMode(!sunInfo.isDay);
@@ -204,7 +223,7 @@ void signalHandler(int sig)
 int main()
 {
     log_handle = os_log_create("eu.onderweg", getppid() == 1 ? "daemon" : "default");
-    console_log("Following the sun... checking every %i seconds", POLL_INTERVAL);
+    console_log("Following the sun... checking every %s%i%s seconds", ANSI_BOLD, POLL_INTERVAL, ANSI_RESET);
 
     t_sundial info = getSunInfo();
     createTimer(info);
