@@ -46,7 +46,7 @@ typedef struct
     bool isDay;
 } t_sundial;
 
-void _log(FILE * stream, const char *fmt, va_list ap) {
+static void _log(FILE * stream, const char *fmt, va_list ap) {
     char *str = NULL;    
     vasprintf(&str, fmt, ap);
     if (stream == stdout) {        
