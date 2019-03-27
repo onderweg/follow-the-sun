@@ -51,6 +51,10 @@ Alternatively, directly with gcc:
 $ gcc -F/System/Library/PrivateFrameworks -framework Foundation -framework CoreBrightness follow.c -o follow -lobjc
 ```
 
+## Running on background
+
+See: [Run in background (via launchctl](agent/readme.md)
+
 ## Related
 
 - [dark-mode](https://github.com/sindresorhus/dark-mode) by sindresorhus.
