@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS += -F/System/Library/PrivateFrameworks
-CFLAGS += -O2
+CFLAGS += -O2 -std=c17
 LDFLAGS += -framework Foundation 
 LDFLAGS += -framework CoreBrightness 
 LDFLAGS += -lobjc
