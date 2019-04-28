@@ -8,7 +8,7 @@ This tool was created mainly to experiment with:
 - Using CoreFoundation in C
 - Using macOS Objective-C runtime library (`objc_msgSend`, `sel_registerName`, etc) in C
 
-## Sun schedule info
+## Sun schedule info 🌓
 
 Sunrise/Sunset info is provided by a private macOS system framework named *CoreBrightness*.
 A bit more info on this undocumented API (objective c): https://github.com/thompsonate/Shifty/issues/20.
@@ -51,7 +51,7 @@ Alternatively, directly with gcc:
 $ gcc -F/System/Library/PrivateFrameworks -framework Foundation -framework CoreBrightness follow.c -o follow -lobjc
 ```
 
-## Running on background
+## Running in background
 
 See: [Run in background (via launchctl](agent/readme.md)
 
