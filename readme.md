@@ -42,7 +42,9 @@ So make sure WiFi is turned on.
 This tool logs to macOS system log. This is especially useful when being run as an agent. Log messages can be viewed either in Console.app or on terminal:
 
 ```
-log show --predicate 'subsystem CONTAINS "eu.onderweg"' --last 30m
+$ log show --predicate 'subsystem CONTAINS "eu.onderweg"' --last 30m
+# Or, stream
+$ log stream --predicate 'subsystem CONTAINS "eu.onderweg"'
 ```
 
 ## Building
