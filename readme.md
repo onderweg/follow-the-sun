@@ -11,7 +11,7 @@ This tool was created mainly to experiment with:
 ## Sun schedule info 🌓
 
 Sunrise/Sunset info is provided by a private macOS system framework named *CoreBrightness*.
-A bit more info on this undocumented API (objective c): https://github.com/thompsonate/Shifty/issues/20.
+A bit more info on this undocumented API (Objective-C): https://github.com/thompsonate/Shifty/issues/20.
 
 Example output from this API:
 
@@ -51,9 +51,15 @@ Alternatively, directly with gcc:
 $ gcc -F/System/Library/PrivateFrameworks -framework Foundation -framework CoreBrightness follow.c -o follow -lobjc
 ```
 
+Or, install with [clib](https://github.com/clibs/clib):
+
+```
+$ clib install onderweg/follow-the-sun
+```
+
 ## Running in background
 
-See: [Run in background (via launchctl](agent/readme.md)
+See: [Run in background (via launchctl)](agent/readme.md)
 
 ## Related
 

@@ -1,0 +1,8 @@
+{
+    "name": "follow-the-sun",
+    "version": "1.0.1",
+    "repo": "onderweg/follow-the-sunn",
+    "description": "Switch to Dark mode automatically after sunset",
+    "keywords": ["dark mode", "macos"],
+    "install": "make install"
+  }
