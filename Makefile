@@ -16,6 +16,8 @@ follow: $(SRCS)
 install:
 	install -v $(TARGET) /usr/local/bin/$(TARGET)			
 	
+package_install: follow install
+
 clean:
 	rm -f $(TARGET)
 
