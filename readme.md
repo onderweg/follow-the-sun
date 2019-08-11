@@ -37,6 +37,16 @@ Note that CoreBrightness needs to know your location in order to calculate the c
 might not be able to determine your location. In that case, the calculated sun schedule is not correct.
 So make sure WiFi is turned on. 
 
+## Logging
+
+This tool logs to macOS system log. This is especially useful when being run as an agent. Log messages can be viewed either in Console.app or on terminal:
+
+```
+$ log show --predicate 'subsystem CONTAINS "eu.onderweg"' --last 30m
+# Or, stream
+$ log stream --predicate 'subsystem CONTAINS "eu.onderweg"'
+```
+
 ## Building
 
 **Builds on macOS only**
@@ -61,6 +71,6 @@ $ clib install onderweg/follow-the-sun
 
 See: [Run in background (via launchctl)](agent/readme.md)
 
-## Related
+## Similar projects
 
 - [dark-mode](https://github.com/sindresorhus/dark-mode) by sindresorhus.
