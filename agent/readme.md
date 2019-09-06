@@ -7,6 +7,9 @@ $ ./agent.sh install
 # Start agent
 $ ./agent.sh start
 
-# Stop
+# Stop agent
 $ ./agent.sh stop
+
+# View logs
+$ ./agent.sh logs
 ```
