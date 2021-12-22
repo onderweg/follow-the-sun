@@ -1,6 +1,6 @@
 # Follow the sun
 
-**[2021 Edit]** When this program was made, the functionality the automatically switch to dark mode was not build into macOS. Since macOS Catalina, there is auto dark mode, and this program is not needed anymore. I keep the code here as reference anyway.
+**[2021 Edit]** When this program was made, the functionality to automatically switch to dark mode was not build into macOS yet. In macOS Catalina however, auto dark mode was introduced, making this program superfluous. I keep the code here as reference anyway.
 
 ---
 
