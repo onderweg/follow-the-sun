@@ -1,6 +1,12 @@
 # Follow the sun
 
-Switch to Dark mode automatically after sunset, and back to Light mode after sunrise.
+**[2021 Edit]** When this program was made, the functionality the automatically switch to dark mode was not build into macOS. Since macOS Catalina, there is auto dark mode, and this program is not needed anymore. I keep the code here as reference anyway.
+
+---
+
+## What is this? 
+
+CLI tool that can run on the background, that switches macOS to Dark mode automatically after sunset, and back to Light mode after sunrise.
 
 This tool was created mainly to experiment with:
 
