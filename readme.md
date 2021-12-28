@@ -14,6 +14,10 @@ This tool was created mainly to experiment with:
 - Using CoreFoundation in C
 - Using macOS Objective-C runtime library (`objc_msgSend`, `sel_registerName`, etc) in C
 
+### Known issues ⚠️
+
+- Does not compile on Apple M1 (arm64), because of an ABI change in `objc_msgSend` on M1 architecture.
+
 ## Sun schedule info 🌓
 
 Sunrise/Sunset info is provided by a private macOS system framework named *CoreBrightness*.
